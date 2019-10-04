@@ -1,0 +1,22 @@
+name: Docker Image CI
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Log in to docker registry
+        run: docker login docker.io --username $DOCKER_USERNAME --password $DOCKER_PASSWORD
+        env:
+          DOCKER_USERNAME: littletommytan
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_REGISTRY_PASSWORD }}
+
+      - name: Build the Docker image
+        run: docker build . --file Dockerfile --tag littletommytan/filebeat:v1.0.0
+
+      - name: Push the Docker image
+        run: docker push littletommytan/filebeat:v1.0.0

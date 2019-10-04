@@ -1,0 +1,10 @@
+filebeat.inputs:
+  - type: log
+    enabled: true
+    paths:
+      - /filebeat/logs/**/*.log
+
+output.file:
+  path: "/filebeat/outputs"
+  number_of_files: 256
+  filename: filebeat
